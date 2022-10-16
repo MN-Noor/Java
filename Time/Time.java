@@ -19,24 +19,17 @@ Time(int h,int m,int s)
 }
 void SetTime()
 {
-    int h,m,s;
+    Time t= new Time();
     boolean check=false;
 do{
-    Scanner inp=new Scanner(System.in);
-    System.out.println("Enter time to set\nHours:");
-    h=inp.nextInt();
+    t.get();
 
-    System.out.println("Minutes");
-    m=inp.nextInt();
-    System.out.println("Seconds");
-    s=inp.nextInt();
-
-if((h<=24)&&(m<60)&&(s<60))
+    if((t.hours<=24)&&(t.minutes<60)&&(t.seconds<60))
 {
     check=true;
-    hours=h;
-    minutes=m;
-    seconds=s;
+    hours=t.hours;
+    minutes=t.minutes;
+    seconds=t.seconds;
 }
 else
 {
@@ -60,24 +53,27 @@ void formatTime2()
 {
     System.out.println(hours+":"+minutes+":"+seconds);
 }
-void Add_hours(int h)
+int Add_hours(int h)
 {
-    int num;
-    hours=hours+h;
-    num=hours%24;
-    hours=hours+num;
-    if(hours>24)
+   int hr=hours+h;
+    if(hr>24)
     {
-         hours=hours-24;
+        hr=hr%24;
+        if(hr==0)
+        {
+            hr=24;
+        }
     }
 
+return hr;
 }
-void Add_min(int m)
+Time Add_min(int m)
 {
-    int h=(minutes+m)/60;
-    int min=(minutes+m)%60;
-    hours+=h;
-
+    minutes=minutes+m;
+    int h=minutes/60;
+    int min=minutes%60;
+    int hr=Add_hours(h);
+return new Time(hr,min,seconds);
     
 }
 boolean equals(Time t1)
@@ -87,5 +83,20 @@ boolean equals(Time t1)
         return true;
     }
     return false;
+}
+void Show()
+{
+    System.out.println(hours+":"+minutes+":"+seconds);
+}
+void get()
+{
+    
+    Scanner inp=new Scanner(System.in);
+    System.out.println("Hours:");
+    hours=inp.nextInt();
+    System.out.println("Minutes");
+    minutes=inp.nextInt();
+    System.out.println("Seconds");
+    seconds=inp.nextInt();
 }
 }
