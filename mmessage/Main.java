@@ -46,7 +46,7 @@ System.out.println(rec.charAt(i));
 
 }
 //substring
-String sentence="My name is Aymen Noor";
+String sentence="My name is Aymen NoorH9wGqyec";
 System.out.println(sentence.substring(11));
 
 }  

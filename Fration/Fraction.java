@@ -1,3 +1,4 @@
+import javax.swing.JOptionPane;
 import java.util.Scanner;
 public class Fraction {
     int num;
@@ -16,9 +17,10 @@ public class Fraction {
     Fraction get()
     {
         Fraction rf=new Fraction();
-        Scanner inp=new Scanner(System.in);
-        System.out.println("Enter Fraction\nNumerator:");
-        rf.num=inp.nextInt();
+        String frac;
+        JOptionPane.showMessageDialog(null,"Enter Fraction\nNumerator:");
+        frac=JOptionPane.showInputDialog("Enter Numerator");
+       
         System.out.println("Denominator:");
         rf.den=inp.nextInt();
         return rf;
@@ -50,5 +52,13 @@ public class Fraction {
         System.out.println(f.num+"/"+f.den);
 return new Fraction(f.num,f.den);
 
+    }
+    Fraction strtofrac(String str)
+    {
+        String []strarr=new String[2];
+     strarr=str.split("/",2);
+     num=strarr[0];
+     den=strarr[1];
+     return ;
     }
 }
