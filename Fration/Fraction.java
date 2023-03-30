@@ -1,64 +1,69 @@
-import javax.swing.JOptionPane;
-import java.util.Scanner;
+import java.util.*;
+import java.util.InputMismatchException;
 public class Fraction {
-    int num;
-    int den;
-    Fraction()
-    {
-        num=1;
-        den=1;
-    }
-    Fraction(int n,int d)
-    {
-        num=n;
-        den=d;
-
-    }
-    Fraction get()
-    {
-        Fraction rf=new Fraction();
-        String frac;
-        JOptionPane.showMessageDialog(null,"Enter Fraction\nNumerator:");
-        frac=JOptionPane.showInputDialog("Enter Numerator");
-       
-        System.out.println("Denominator:");
-        rf.den=inp.nextInt();
-        return rf;
-
-    }
-    Fraction Add(Fraction f)
-    {
-        Fraction f1=new Fraction();
-        f1.den=den*f.den;
-        System.out.println(f.num+"/"+num);
-      f1.num=(num*(f1.den/den)+f.num*(f1.den/f.den));
-      System.out.println(f1.num+"/"+f1.den);
-      return  reduce(f1);
-    }
-    Fraction reduce(Fraction f)
-    {
-        int hcd=0;
-        for(int i=2;((i<=f.num)||(i<=f.den));i++)
-        {
-            if((f.num%i==0)&&(f.den%i==0))
-            {
-                hcd=i;
-               
-            }
-        }
-        System.out.println(hcd);
-        f.num/=hcd;
-        f.den/=hcd;
-        System.out.println(f.num+"/"+f.den);
-return new Fraction(f.num,f.den);
-
-    }
-    Fraction strtofrac(String str)
-    {
-        String []strarr=new String[2];
-     strarr=str.split("/",2);
-     num=strarr[0];
-     den=strarr[1];
-     return ;
-    }
+int deno,numer;
+Scanner sc=new Scanner(System.in);
+Fraction(int n,int d)
+{
+	numer=n;
+	deno=d;
+}
+public Fraction(String s) throws FractionExceptions,NumberFormatException{
+	String a[]=s.split("/");
+	if(a.length!=2)
+		throw new FractionExceptions("Format should be 1/2");
+	numer=Integer.parseInt(a[0]);
+	deno=Integer.parseInt(a[1]);
+	if (deno==0)
+		throw new FractionExceptions("Denominator can't be zero");
+}
+public String get()
+{
+	return numer+"/"+deno;
+}
+void reduceFraction()
+{
+	int gcd = 0;
+	for(int i=1;i<=deno&&i<=numer;i++)
+	{
+		if(deno%i==0&&numer%i==0)
+		{
+			gcd=i;
+		}
+	}
+	deno=deno/gcd;
+	numer=numer/gcd;
+}
+Fraction multiplyFraction(Fraction f)
+{
+	Fraction f1=new Fraction(1,1);
+	f1.numer=numer*f.numer;
+	f1.deno=deno*f.deno;
+	f1.reduceFraction();
+	return f1;
+}
+Fraction divideFraction(Fraction f)
+{
+	Fraction f1=new Fraction(1,1);
+	f1.numer=numer*f.deno;
+	f1.deno=deno*f.numer;
+	f1.reduceFraction();
+	return f1;
+}
+Fraction addFraction(Fraction f)
+{
+	Fraction f1=new Fraction(1,1);
+	f1.deno=deno*f.deno;
+	f1.numer=(f1.deno/deno*numer)+(f1.deno/f.deno*f.numer);
+	f1.reduceFraction();
+	return f1;
+}
+Fraction subtractFraction(Fraction f)
+{
+	Fraction f3=new Fraction(1,1);
+	f3.deno=deno*f.deno;
+	f3.numer=(f3.deno/deno*numer)-(f3.deno/f.deno*f.numer);
+	f3.reduceFraction();
+	return f3;
+}
 }
